@@ -16,7 +16,7 @@ class BaseController extends AbstractController
         return $this->ResponseJSON(false, ['message' => $msg]);
     }
 
-    public function ResponseError(string $error_msg)
+    public function ResponseError(string $error_msg = 'An error has occurred')
     {
         return $this->ResponseJSON(false, ['error' => $error_msg]);
     }
