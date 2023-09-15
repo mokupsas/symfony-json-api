@@ -1,6 +1,7 @@
 <?php
 namespace App\Core;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -27,5 +28,10 @@ class BaseController extends AbstractController
             'success'   => $success,
             'data'      => $data
         ]);
+    }
+
+    public function getUser() : ?User
+    {
+        return parent::getUser();
     }
 }
