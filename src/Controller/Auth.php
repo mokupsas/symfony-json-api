@@ -9,14 +9,17 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Auth extends BaseController
 {
-    private $request;
+    private Request $request;
 
-    public function __construct()
+    public function __construct(RequestStack $requestStack)
     {
-        $this->request = Request::createFromGlobals();
+        // RequestStack used instead Request::createFromGlobals(),
+        // to get json request data
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     #[Route('/api/auth/register', name: 'api_auth_register', methods: ['POST'])]
@@ -67,6 +70,15 @@ class Auth extends BaseController
 
         return $this->ResponseOK([
             'email' => $user->getEmail()
+        ]);
+    }
+
+    #[Route('/api/auth/test', name: 'api_auth_test', methods: ['GET', 'POST'])]
+    public function test(): JsonResponse
+    {
+        // Test if JSON request
+        return $this->ResponseOK([
+            $this->request->request->get('id')
         ]);
     }
 }
