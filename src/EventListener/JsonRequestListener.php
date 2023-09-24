@@ -22,7 +22,7 @@ class JsonRequestListener
         } 
         catch (\JsonException $exception)
         {
-            $event->setResponse(new JsonResponse(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST));
+            $event->setResponse(new JsonResponse(['success' => false, 'error' => 'JSON request is invalid'], Response::HTTP_BAD_REQUEST));
         }
     }
 
